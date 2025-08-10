@@ -1,4 +1,4 @@
-package DZ2;
+package DZ2.MyCollections;
 
 import java.util.Arrays;
 import java.util.Collection;

@@ -1,11 +1,11 @@
-package org.example;
+package DZ2;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import DZ2.MyArrayList;
-import DZ2.MyHashSet;
+import DZ2.MyCollections.MyArrayList;
+import DZ2.MyCollections.MyHashSet;
 import DZ2.Students.Book;
 import DZ2.Students.Student;
 
@@ -21,19 +21,18 @@ public class Main {
         myHashSet.add("Liza");
         myHashSet.add("Valera");
 
-        System.out.println(myHashSet.toString());]
+        System.out.println(myHashSet.toString());
 
         ArrayList<Integer> arrayList = new ArrayList<Integer>();
         for (Integer i = 1; i < 20; i++)
-        arrayList.add(i);
+            arrayList.add(i);
 
         MyArrayList<Integer> myArrayList = new MyArrayList<Integer>();
         System.out.println(myArrayList.add(1));
         System.out.println(myArrayList.remove(1));
         System.out.println(myArrayList.addAll(arrayList));
         for (int i = 0; i <= myArrayList.length() - 1; i++)
-        System.out.println(myArrayList.get(i));
-
+            System.out.println(myArrayList.get(i));
 
         // Вторая часть дз
         ArrayList<Student> students = new ArrayList<>();
