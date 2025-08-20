@@ -1,48 +1,34 @@
 package DZ4;
 
 public class LiveLock {
-    static class Friend {
-        private String name;
-        private boolean isHungry = true;
+    private static Object lockRes = new Object();
+    private static boolean isBusy = true;
 
-        public Friend(String name) {
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public boolean isHungry() {
-            return isHungry;
-        }
-
-        public void eatWith(Friend other) {
-            while (isHungry) {
-                if (other.isHungry()) {
-                    System.out.println("Жду пока поест " + other.getName());
+    public static void main(String[] args) {
+        Runnable run = new Runnable() {
+            @Override
+            public void run() {
+                while (isBusy) {
+                    synchronized (lockRes) {
+                        System.out.println(Thread.currentThread().getName() + " уступает ресурс");
+                        Thread.yield();
+                    }
+                }
+                System.out.println(Thread.currentThread().getName() + " Занимает ресурс");
+                synchronized (lockRes) {
+                    isBusy = true;
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException e) {
                     }
-                } else {
-                    System.out.println("Начинаю кушать");
-                    isHungry = false;
+                    isBusy = false;
+
                 }
             }
-        }
+        };
+
+        new Thread(run, "Thread 1").start();
+        new Thread(run, "Thread 2").start();
+
     }
-
-    public static void main(String[] args) {
-        Friend igor = new Friend("Игорь");
-        Friend valera = new Friend("Валера");
-
-        new Thread(() -> {
-            igor.eatWith(valera);
-        }).start();
-        new Thread(() -> {
-            valera.eatWith(igor);
-        }).start();
-    }
-
 }
